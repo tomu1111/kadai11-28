@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>upload</title>
+</head>
+<body>
+    <progress value="0" max="100" id="uploader">0%</progress>
+    <input type="file" value="upload" id="fileButton" />
+    <a id="don" href="https://console.firebase.google.com/u/0/project/share-8bccb/storage/share-8bccb.appspot.com/files~2Fsweet_gifs">ダウンロード先</a>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-storage.js"></script>
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyAZUoC8HhMqOcueb6DsLOxNf0P_yjlGt4s",
+    authDomain: "share-8bccb.firebaseapp.com",
+    databaseURL: "https://share-8bccb.firebaseio.com",
+    projectId: "share-8bccb",
+    storageBucket: "share-8bccb.appspot.com",
+    messagingSenderId: "265807274713",
+    appId: "1:265807274713:web:743bd7ccc089dcf2c194c8"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+var uploader = document.getElementById("uploader");
+var fileButton = document.getElementById("fileButton");
+
+fileButton.addEventListener("change",function(e){
+
+var file = e.target.files[0];
+
+var storageRef = firebase.storage().ref('sweet_gifs/' + file.name);
+
+var task = storageRef.put(file);
+
+task.on("state_changed",
+
+function progress(snapshot){
+ var percentage = (snapshot.bytesTransferred /
+ snapshot.totalBytes) * 100;
+},
+
+function error(err){
+
+},
+
+function complete(){
+
+}
+
+);
+});
+</script>
+</body>
+</html>
